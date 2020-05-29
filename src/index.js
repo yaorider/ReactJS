@@ -24,25 +24,30 @@ class Board extends React.Component {
 			arrayNumber: [],
 			preNumber: 0,
 			operator: '',
+			tmpTotalNumber: 0,
 		};
 	}
         
 	handleClick(value) {
-		const {total, arrayHistory, arrayNumber, preNumber, operator} = this.state;
+		const {total, arrayHistory, arrayNumber, preNumber, operator, tmpTotalNumber} = this.state;
+console.log("tmpTotalNumber",tmpTotalNumber);
 
 		var tmpTotla = total;
 		var tmpArrayHistory = arrayHistory;
 		var tmpArrayNumber = arrayNumber;
 		var tmpPreNumber = preNumber;
 		var tmpOperator = operator;
+		var tmpTmpTotalNumber = tmpTotalNumber;
 
 		var tmpNumber = tmpArrayNumber.toString().replace(/,/g, '');
 		switch (value) {
 			case "AC" :
+				tmpTotla = 0;
 				tmpOperator = "AC";
 				tmpArrayHistory = [];
 				tmpArrayNumber = [];
 				tmpPreNumber = 0;
+				tmpNumber = 0;
 				break;
 			case "+/-" :
 				tmpOperator = "+/-";
@@ -72,6 +77,12 @@ class Board extends React.Component {
 				tmpOperator = "＋";
 				tmpArrayHistory.push("＋");
 				break;
+			case "％" :
+				tmpOperator = "％";
+				tmpArrayHistory.push("％");
+				tmpNumber = parseInt(tmpNumber) / 100;
+				tmpTotla = tmpNumber;
+				break;
 			case "．" :
 				var check = tmpArrayNumber.indexOf(".");
 				if ((check < 0) && (tmpArrayNumber.length > 0)) {
@@ -79,24 +90,34 @@ class Board extends React.Component {
 				}
 				tmpArrayHistory.push(".");
 				break;
+			case "＝" :
+				tmpTotla = tmpTmpTotalNumber;
+				break;
+			case "Ｃ" :
+				if (tmpArrayHistory.lenght > 0 ) {
+					tmpArrayHistory = tmpArrayHistory.pop();
+					tmpArrayNumber = tmpArrayNumber.pop();
+				}
+				break;
 			default :
 				tmpArrayHistory.push(value);
+				console.log("bbbbb");
 				switch (tmpOperator) {
 					case "＋" :
 						tmpNumber = parseInt(tmpNumber) + parseInt(value);
-						tmpTotla = tmpNumber;
+						tmpTmpTotalNumber = tmpNumber;
 						break;
 					case "－" :
 						tmpNumber = parseInt(tmpNumber) - parseInt(value);
-						tmpTotla = tmpNumber;
+						tmpTmpTotalNumber = tmpNumber;
 						break;
 					case "×" :
 						tmpNumber = parseInt(tmpNumber) * parseInt(value);
-						tmpTotla = tmpNumber;
-						break;
+						tmpTmpTotalNumber = tmpNumber;
+						break;tmpTmpTotalNumber
 					case "÷" :
 						tmpNumber = parseInt(tmpNumber) / parseInt(value);
-						tmpTotla = tmpNumber;
+						tmpTmpTotalNumber = tmpNumber;
 						break;
 					default :
 						break;
@@ -105,12 +126,19 @@ class Board extends React.Component {
 				break;
 				
 		}
-
+console.log("tmpTotla",tmpTotla);
+console.log("arrayHistory",arrayHistory);
+console.log("arrayNumber",arrayNumber);
+console.log("preNumber",preNumber);
+console.log("operator",operator);
+console.log("tmpTotalNumber",tmpTotalNumber);
 		this.setState({total: tmpTotla});
-		this.setState({arrayHistory: tmpArrayHistory.slice()});
+		this.setState({arrayHistory: tmpArrayHistory});
 		this.setState({arrayNumber: tmpArrayNumber});
 		this.setState({preNumber: tmpPreNumber});
 		this.setState({operator: tmpOperator});
+		this.setState({tmpTotalNumber: tmpTmpTotalNumber});
+		
 	}
 
 	renderButton(value) {
@@ -130,7 +158,7 @@ class Board extends React.Component {
 				<div className="board-row">
 					{this.renderButton('AC')}
 					{this.renderButton('+/-')}
-					{this.renderButton('')}
+					{this.renderButton('％')}
 					{this.renderButton('÷')}
 				</div>
 				<div className="board-row">
@@ -154,7 +182,8 @@ class Board extends React.Component {
 				<div className="board-row">
 					{this.renderButton(0)}
 					{this.renderButton('．')}
-					{this.renderButton('')}
+					{this.renderButton('＝')}
+					{this.renderButton('Ｃ')}
 				</div>
 			</div>
 		);
