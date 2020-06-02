@@ -30,7 +30,6 @@ class Board extends React.Component {
         
 	handleClick(value) {
 		const {total, arrayHistory, arrayNumber, preNumber, operator, tmpTotalNumber} = this.state;
-console.log("tmpTotalNumber",tmpTotalNumber);
 
 		var tmpTotla = total;
 		var tmpArrayHistory = arrayHistory;
@@ -126,12 +125,6 @@ console.log("tmpTotalNumber",tmpTotalNumber);
 				break;
 				
 		}
-console.log("tmpTotla",tmpTotla);
-console.log("arrayHistory",arrayHistory);
-console.log("arrayNumber",arrayNumber);
-console.log("preNumber",preNumber);
-console.log("operator",operator);
-console.log("tmpTotalNumber",tmpTotalNumber);
 		this.setState({total: tmpTotla});
 		this.setState({arrayHistory: tmpArrayHistory});
 		this.setState({arrayNumber: tmpArrayNumber});
