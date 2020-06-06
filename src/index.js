@@ -113,7 +113,7 @@ class Board extends React.Component {
 					case "×" :
 						tmpNumber = parseInt(tmpNumber) * parseInt(value);
 						tmpTmpTotalNumber = tmpNumber;
-						break;tmpTmpTotalNumber
+						break;
 					case "÷" :
 						tmpNumber = parseInt(tmpNumber) / parseInt(value);
 						tmpTmpTotalNumber = tmpNumber;
