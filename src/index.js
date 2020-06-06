@@ -100,7 +100,6 @@ class Board extends React.Component {
 				break;
 			default :
 				tmpArrayHistory.push(value);
-				console.log("bbbbb");
 				switch (tmpOperator) {
 					case "＋" :
 						tmpNumber = parseInt(tmpNumber) + parseInt(value);
